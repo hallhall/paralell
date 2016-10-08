@@ -18,5 +18,11 @@ public class sample : MonoBehaviour {
         if (Input.GetKey("left")) {
             this.transform.position -= transform.right * speed;
         }
+		if (Input.GetKey("up")) {
+			this.transform.position += transform.up * speed;
+		}
+		if (Input.GetKey("down")) {
+				this.transform.position -= transform.up * speed;
+		}
 	}
 }
