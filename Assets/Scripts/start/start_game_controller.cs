@@ -29,8 +29,23 @@ public class start_game_controller : MonoBehaviour {
             can_tap_to_start = false;
             object_wrap_controller.Play("game_ready");
         }
+        if ((common_method.is_touch_3d("story_btn")) || (common_method.is_touch_3d("mon_tap"))) {
+            start_anim_trigger.is_move = true;
+            start_anim_trigger.to_move_str = "story";
+            object_wrap_controller.Play("tap_story");
 
-	}
+        }
+        if ((common_method.is_touch_3d("")) || (common_method.is_touch_3d(""))) {
+
+        }
+        if ((common_method.is_touch_3d("")) || (common_method.is_touch_3d(""))) {
+
+        }
+        if ((common_method.is_touch_3d("")) || (common_method.is_touch_3d(""))) {
+
+        }
+
+    }
 
 
 }

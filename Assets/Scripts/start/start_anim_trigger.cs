@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class start_anim_trigger : MonoBehaviour {
     Animator object_wrap_controller;
-    Animator front_wrap_controller;
+    public Animator front_wrap_controller;
+    public GameObject front_wrap;
     static public bool is_move; //ここがtrueならばアニメ終了時に移動
     static public string to_move_str; //この値の先へ移動
 
     void start () {
-        front_wrap_controller = GameObject.Find("front_wrap").GetComponent<Animator>();
+        front_wrap = GameObject.Find("front_wrap");
+        front_wrap_controller = front_wrap.GetComponent<Animator>();
     }
 
 	public void to_tap_to_start () {
@@ -25,10 +27,8 @@ public class start_anim_trigger : MonoBehaviour {
         }
     }
 
-    public void tap_story() {
-        Debug.Log("j");
-        is_move = true;
-        to_move_str = "story";
+    public void tap_story_end() {
+        front_wrap.SetActive(true);
         front_wrap_controller.Play("start_end");
     }
 }
