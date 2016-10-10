@@ -23,7 +23,7 @@ public class start_game_controller : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //tap_to_startの判定
-        if ((common_method.is_touch("tap_to_text")) && (can_tap_to_start == true)) {
+        if ((can_tap_to_start == true) && (common_method.is_touch("tap_to_text"))) {
             tap_to_start_music.Play();
             bird_music.Play();
             can_tap_to_start = false;

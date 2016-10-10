@@ -49,6 +49,8 @@
      <Compile Include="Assets\Scripts\common\common.cs" />
      <Compile Include="Assets\Scripts\start\start_anim_trigger.cs" />
      <Compile Include="Assets\Scripts\start\start_game_controller.cs" />
+     <Compile Include="Assets\Scripts\story\camera_anim_trigger.cs" />
+     <Compile Include="Assets\Scripts\story\story_ui_controller.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

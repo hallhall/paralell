@@ -16,6 +16,9 @@ namespace common {
                     foreach (Collider2D aCollider2d in aCollider2dAll) {
                         if (aCollider2d) {
                             GameObject obj = aCollider2d.transform.gameObject;
+                            //
+                            //Debug.Log(obj.name);
+                            //
                             if (obj.name == _obj_name) return true;
                         }
                     }
@@ -24,6 +27,20 @@ namespace common {
             return false;
         }
 
-
+        //タッチ判定（３ｄ）
+        public static bool is_touch_3d(string _obj_name) {
+            if (Input.GetMouseButtonDown(0)) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(ray, out hit)) {
+                    GameObject obj = hit.collider.gameObject;
+                    //
+                    //Debug.Log(obj.name);
+                    //
+                    if (_obj_name == obj.name) return true;
+                }
+            }
+            return false;
+        }
     }
 }
