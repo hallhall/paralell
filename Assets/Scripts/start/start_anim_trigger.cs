@@ -23,6 +23,7 @@ public class start_anim_trigger : MonoBehaviour {
 
     public void story_end() {
         if (is_move) {
+            is_move = false;
             SceneManager.LoadScene(to_move_str);
         }
     }

@@ -35,12 +35,31 @@ namespace common {
                 if (Physics.Raycast(ray, out hit)) {
                     GameObject obj = hit.collider.gameObject;
                     //
-                    //Debug.Log(obj.name);
+                    Debug.Log(obj.name);
                     //
                     if (_obj_name == obj.name) return true;
                 }
             }
             return false;
+        }
+
+
+        //タッチ判定（複数、返り値は成功すれば文字列。失敗すれば空文字）
+        public static string is_touch_3d_str(string[] _objs_name) {
+            if (Input.GetMouseButtonDown(0)) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit = new RaycastHit();
+                if (Physics.Raycast(ray, out hit)) {
+                    GameObject obj = hit.collider.gameObject;
+                    //
+                    //Debug.Log(obj.name);
+                    //
+                    foreach (string _obj_name in _objs_name) {
+                        if (_obj_name == obj.name) return _obj_name;
+                    }
+                }
+            }
+            return "";
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class sample_save : MonoBehaviour {
 
-	public static bool[] have_costume = { true, false, false }; //have=1, 
+	public static bool[] have_costume = { true, true, false }; //have=1, 
 	public static bool[] have_stage = { true, false, false };
 	public static bool[] have_light = { true, false, false };
 	public static int max_score = 0;
