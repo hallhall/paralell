@@ -4,8 +4,8 @@ using System.Collections;
 public class sample_save : MonoBehaviour {
 
 	public static bool[] have_costume = { true, true, false }; //have=1, 
-	public static bool[] have_stage = { true, false, false };
-	public static bool[] have_light = { true, false, false };
+	public static bool[] have_stage = { true, true, false };
+	public static bool[] have_light = { true, true, false };
 	public static int max_score = 0;
 	public static int max_combo = 0;
 	public static int now_point = 0;

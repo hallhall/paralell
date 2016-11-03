@@ -39,8 +39,8 @@ public class ready_game_controller : MonoBehaviour {
 	ParticleSystem light_particle;
 
 	//動作用
-	string[] costumes_str = {"alice_body_1.png", "alice_body_2.png", "alice_body_3.png"};
-	string[] stages_str = {"tree_back.png", "house_back.png", "building_back.png"};
+	string[] costumes_str = {"alice_body_1", "alice_body_2", "alice_body_3"};
+	string[] stages_str = {"tree_back", "house_back", "building_back"};
 	Color[] lights_str = {new Color(254f/255f, 255f/255f, 193f/255f), new Color(254f/255f, 255f/255f, 193f/255f), new Color(254f/255f, 255f/255f, 193f/255f)};
 	bool is_modal = false; //モーダルが起動中か否か
 
@@ -155,29 +155,28 @@ public class ready_game_controller : MonoBehaviour {
 	//モーダルウィンドウの画像セット
 	void set_mordal_img () {
         //コスチュームのセット
-        now_costume_img.sprite = Resources.Load<Sprite>("../Images/ready/"+costumes_str[0]);
+        now_costume_img.sprite = Resources.Load<Sprite>("costumes/"+costumes_str[0]);
         if (costumes_str[1] == null) {
             have_costume_1_img.enabled = false;
         } else {
-            have_costume_1_img.sprite = Resources.Load<Sprite>("../Images/ready/" + costumes_str[1]);
-            Debug.Log("../Images/ready/" + costumes_str[1]);
+            have_costume_1_img.sprite = Resources.Load<Sprite>("costumes/" + costumes_str[1]);
         }
         if (costumes_str[2] == null) {
             have_costume_2_img.enabled = false;
         } else {
-            have_costume_2_img.sprite = Resources.Load<Sprite>("../Images/ready/" + costumes_str[2]);
+            have_costume_2_img.sprite = Resources.Load<Sprite>("costumes/" + costumes_str[2]);
         }
         //ステージのセット
-        now_stage_img.sprite = Resources.Load<Sprite>("../Images/ready/"+stages_str[0]);
+        now_stage_img.sprite = Resources.Load<Sprite>("stages/"+stages_str[0]);
         if (stages_str[1] == null) {
             have_stage_1_img.enabled = false;
         } else {
-            have_stage_1_img.sprite = Resources.Load<Sprite>("../Images/ready/" +stages_str[1]);
+            have_stage_1_img.sprite = Resources.Load<Sprite>("stages/" +stages_str[1]);
         }
         if (stages_str[2] == null) {
             have_stage_2_img.enabled = false;
         } else {
-            have_stage_2_img.sprite = Resources.Load<Sprite>("../Images/ready/" + stages_str[2]);
+            have_stage_2_img.sprite = Resources.Load<Sprite>("stages/" + stages_str[2]);
         }
         //証明のセット
         now_light_img.color = lights_str[0];
