@@ -9,6 +9,8 @@ public class ready_game_controller : MonoBehaviour {
     AudioSource button_bgm;
     AudioSource return_bgm;
 
+	Animator front_wrap_anim;
+
     Text stage_score;
     Text stage_combo;
     Text normal_mode;
@@ -18,6 +20,7 @@ public class ready_game_controller : MonoBehaviour {
 
     SpriteRenderer demo_alice_body;
     SpriteRenderer demo_back_img;
+	SpriteRenderer demo_light_obj_img;
     SpriteRenderer costume_img;
     SpriteRenderer stage_img;
     SpriteRenderer light_img;
@@ -40,8 +43,8 @@ public class ready_game_controller : MonoBehaviour {
 
 	//動作用
 	string[] costumes_str = {"alice_body_1", "alice_body_2", "alice_body_3"};
-	string[] stages_str = {"tree_back", "house_back", "building_back"};
-	Color[] lights_str = {new Color(254f/255f, 255f/255f, 193f/255f), new Color(254f/255f, 255f/255f, 193f/255f), new Color(254f/255f, 255f/255f, 193f/255f)};
+	string[] stages_str = {"tree_back", "house_back", "buildings_back"};
+	Color[] lights_str = {new Color(254f/255f, 255f/255f, 193f/255f), new Color(255f/255f, 0f/255f, 0f/255f), new Color(160f/255f, 255f/255f, 255f/255f)};
 	bool is_modal = false; //モーダルが起動中か否か
 
     //交換用（モーダルを開いている際に、どのアイテムを選択しているか）
@@ -78,6 +81,7 @@ public class ready_game_controller : MonoBehaviour {
 		book_percent = GameObject.Find("book_percent").GetComponent<Text>();
 		demo_alice_body = GameObject.Find("demo_alice_body").GetComponent<SpriteRenderer>();
 		demo_back_img = GameObject.Find("demo_back_img").GetComponent<SpriteRenderer>();
+		demo_light_obj_img = GameObject.Find ("demo_light_obj_img").GetComponent<SpriteRenderer> ();
 		costume_img = GameObject.Find("costume_img").GetComponent<SpriteRenderer>();
 		stage_img = GameObject.Find("stage_img").GetComponent<SpriteRenderer>();
 		light_img = GameObject.Find("light_img").GetComponent<SpriteRenderer>();
@@ -91,6 +95,7 @@ public class ready_game_controller : MonoBehaviour {
 		have_light_1_img = GameObject.Find("have_light_1_img").GetComponent<SpriteRenderer>();
 		have_light_2_img = GameObject.Find("have_light_2_img").GetComponent<SpriteRenderer>();
 		front_wrap = GameObject.Find("front_wrap");
+		front_wrap_anim = front_wrap.GetComponent<Animator> ();
 		light_particle = GameObject.Find("demo_light_particle").GetComponent<ParticleSystem>();
 		modal_costume_wrap = GameObject.Find ("modal_costume_wrap");
 		modal_stage_wrap = GameObject.Find ("modal_stage_wrap");
@@ -193,17 +198,30 @@ public class ready_game_controller : MonoBehaviour {
     }
 
 
+	//デモの画像セット
+	void set_demo_img() {
+		demo_alice_body.sprite = Resources.Load<Sprite> ("costumes/" + costumes_str [0]);
+		costume_img.sprite = Resources.Load<Sprite> ("costumes/" + costumes_str [0]);
+		demo_back_img.sprite = Resources.Load<Sprite> ("stages/" + stages_str [0]);
+		stage_img.sprite = Resources.Load<Sprite> ("stages/" + stages_str [0]);
+		demo_light_obj_img.color = lights_str [0];
+		light_img.color = lights_str [0];
+		light_particle.startColor = lights_str [0];
+	}
+
+
     //タッチ判定
     void ready_touch_check () {
-        string[] touch_key = {"back_btn_tap", "costume_tap", "stage_tap", "light_tap", "start_btn_tap", "have_costume_1_tap", "have_costume_2_tap", "modal_costume_chage_btn_tap" };
+		string[] touch_key = {"back_btn_tap", "costume_tap", "stage_tap", "light_tap", "start_btn_tap", "have_costume_1_tap", "have_costume_2_tap", "modal_costume_change_btn_tap", "have_stage_1_tap", "have_stage_2_tap", "modal_stage_change_btn_tap", "have_light_1_tap", "have_light_2_tap", "modal_light_change_btn_tap"};
         string touch_obj_name = common_method.is_touch_3d_str(touch_key);
         //if (touch_obj_name != "") Debug.Log(touch_obj_name);
         switch (touch_obj_name) {
             case "":
                 break;
-            case "back_btn_tap":
-                ready_anim_tigger.is_move = true;
-                ready_anim_tigger.to_move_str = "story";
+			case "back_btn_tap":
+				ready_anim_tigger.is_move = true;
+				ready_anim_tigger.to_move_str = "story";
+				front_wrap_anim.Play ("ready_end");
                 break;
             case "costume_tap":
                 if (!is_modal) {
@@ -227,6 +245,7 @@ public class ready_game_controller : MonoBehaviour {
                 if (!is_modal) {
                     ready_anim_tigger.is_move = true;
                     ready_anim_tigger.to_move_str = "stage1";//------------------------
+					front_wrap_anim.Play ("ready_end");
                 }
                 break;
             case "have_costume_1_tap":
@@ -239,7 +258,7 @@ public class ready_game_controller : MonoBehaviour {
                 GameObject.Find("have_costume_2_img_frame").GetComponent<SpriteRenderer>().color = selected_color;
                 now_selected = 2;
                 break;
-            case "modal_costume_chage_btn_tap":
+            case "modal_costume_change_btn_tap":
                 if (now_selected != 0) {
                     string before_costume_str = costumes_str[0];
                     costumes_str[0] = costumes_str[now_selected];
@@ -247,9 +266,61 @@ public class ready_game_controller : MonoBehaviour {
                     now_selected = 0;
                 }
                 set_mordal_img();
+				set_demo_img ();
                 is_modal = false;
+				GameObject.Find("have_costume_1_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_costume_2_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
                 modal_costume_wrap.SetActive(false);
                 break;
+			case "have_stage_1_tap":
+				GameObject.Find("have_stage_2_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_stage_1_img_frame").GetComponent<SpriteRenderer>().color = selected_color;
+				now_selected = 1;
+				break;
+			case "have_stage_2_tap":
+				GameObject.Find("have_stage_1_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_stage_2_img_frame").GetComponent<SpriteRenderer>().color = selected_color;
+				now_selected = 2;
+				break;
+			case "modal_stage_change_btn_tap":
+				if (now_selected != 0) {
+					string before_stage_str = stages_str[0];
+					stages_str[0] = stages_str[now_selected];
+					stages_str[now_selected] = before_stage_str;
+					now_selected = 0;
+				}
+				set_mordal_img();
+				set_demo_img ();
+				is_modal = false;
+				GameObject.Find("have_stage_1_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_stage_2_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				modal_stage_wrap.SetActive(false);
+				break;
+			case "have_light_1_tap": 
+				GameObject.Find("have_light_2_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_light_1_img_frame").GetComponent<SpriteRenderer>().color = selected_color;
+				now_selected = 1;
+				break;
+			case "have_light_2_tap": 
+				GameObject.Find("have_light_1_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_light_2_img_frame").GetComponent<SpriteRenderer>().color = selected_color;
+				now_selected = 2;
+				break;
+			case "modal_light_change_btn_tap":
+				if (now_selected != 0) {
+					Color before_light_str = lights_str [0];
+					lights_str [0] = lights_str [now_selected];
+					lights_str [now_selected] = before_light_str;
+					now_selected = 0;
+				}
+				set_mordal_img ();
+				set_demo_img ();
+				is_modal = false;
+				GameObject.Find("have_light_1_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				GameObject.Find("have_light_2_img_frame").GetComponent<SpriteRenderer>().color = Color.white;
+				modal_light_wrap.SetActive(false);
+				break;
         }
+			
     }
 }
